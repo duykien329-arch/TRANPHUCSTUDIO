@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b14">
+<title>ADD STUDIO • VIDEO LAB PRO</title>
+<style>
+:root{--bg:#070912;--panel:#101626;--line:#283650;--cyan:#43f6e8;--pink:#ff43aa;--muted:#9caecc}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#23345c 0,#090c17 55%,#05060b 100%);color:#eef5ff;font:15px system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
+header{text-align:center;padding:23px 14px 10px}header h1{margin:0;color:var(--cyan);letter-spacing:3px;font-size:clamp(22px,5vw,30px);text-shadow:0 0 22px #43f6e877}header p{margin:7px 0;color:var(--muted);font-size:12px;letter-spacing:2px}
+main{max-width:850px;margin:auto;padding:8px 13px 35px}.panel{background:#101626eF;border:1px solid var(--line);border-radius:17px;padding:15px;margin:12px 0;box-shadow:0 14px 35px #0005}
+h2{font-size:15px;margin:0 0 10px;color:#dce9ff}label{display:block;color:#b7c8e4;font-size:12px;margin:12px 0 6px}
+input,textarea,select,button{font:inherit;width:100%;border-radius:10px;border:1px solid #35445f;background:#080d18;color:#eef5ff;padding:11px}
+input[type=file]{padding:8px}input[type=range]{padding:0;accent-color:var(--cyan)}textarea{min-height:76px;resize:vertical}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;background:linear-gradient(100deg,#008f9d,#365de5);font-weight:800;margin-top:11px}.btn.alt{background:#1a2940;border:1px solid #3a4e70}.btn.pink{background:linear-gradient(100deg,#b81b79,#6537d5)}
+.preview{display:flex;justify-content:center;background:#03050a;border-radius:13px;padding:9px}.preview canvas{width:min(100%,300px);max-height:54vh;object-fit:contain;border-radius:8px}
+.hint{color:#8fa2bf;font-size:12px;line-height:1.55}#status{white-space:pre-wrap;color:var(--cyan);font-size:13px;margin-top:10px}.pill{display:inline-block;border:1px solid #304461;border-radius:99px;padding:4px 9px;color:#b8d8ff;font-size:11px;margin:2px}
+a{color:var(--cyan)}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.checks label{margin:0;display:flex;gap:8px;align-items:center}.checks input{width:auto}
+@media(max-width:520px){.grid,.checks{grid-template-columns:1fr}main{padding-inline:10px}}
+</style></head>
+<body>
+<header><h1>ADD STUDIO</h1><p>VIDEO LAB PRO · ANIME / NEON / CYBER</p><span class="pill">9:16 VERTICAL</span><span class="pill">PHOTO → VIDEO</span><span class="pill">SAFARI + WINDOWS</span></header>
+<main>
+<section class="panel">
+<h2>01 / Nội dung</h2>
+<label>Chọn nhiều ảnh (JPG, PNG, WEBP)</label><input id="photos" type="file" accept="image/*" multiple>
+<div class="grid"><div><label>Tiêu đề chính</label><input id="title" maxlength="70" value="ADD STUDIO"></div><div><label>Dòng phụ</label><input id="subtitle" maxlength="90" value="ENTER THE NEON WORLD"></div></div>
+<label>Thông điệp (mỗi dòng là một cảnh chữ)</label><textarea id="copy">WELCOME TO ADD STUDIO
+CREATE WITHOUT LIMITS
+YOUR STORY STARTS HERE</textarea>
+<div class="grid"><div><label>Mẫu giao diện</label><select id="theme"><option value="cyber">Cyber Neon</option><option value="anime">Anime Energy</option><option value="matrix">Hacker Matrix</option><option value="pink">Pink Cyber</option><option value="cinema">Cinematic Blue</option></select></div><div><label>Chuyển cảnh</label><select id="transition"><option value="fade">Fade + Glow</option><option value="slide">Slide</option><option value="zoom">Zoom</option><option value="glitch">Glitch</option></select></div></div>
+<div class="grid"><div><label>Thời lượng (giây)</label><select id="duration"><option>10</option><option selected>15</option><option>20</option><option>30</option><option>45</option></select></div><div><label>Nhịp hiệu ứng</label><select id="motion"><option value="medium">Vừa phải</option><option value="fast">Nhanh</option><option value="slow">Chậm / điện ảnh</option></select></div></div>
+<label>Nhạc nền (tùy chọn)</label><input id="music" type="file" accept="audio/*">
+<label>Cường độ nhạc</label><input id="volume" type="range" min="0" max="100" value="35">
+<label>Kích thước tiêu đề</label><input id="size" type="range" min="26" max="58" value="42">
+<button class="btn" id="previewBtn">▶ XEM TRƯỚC</button>
+<button class="btn pink" id="recordBtn">● DỰNG VIDEO TRÊN TRÌNH DUYỆT</button>
+<a id="download" style="display:none;display:block;margin-top:12px"></a>
+<div id="status">Sẵn sàng. Chọn ảnh, nhập nội dung và bấm xem trước.</div>
+<p class="hint">Bản Safari ghi video trực tiếp trong trình duyệt nếu thiết bị hỗ trợ MediaRecorder. Tùy phiên bản Safari, file có thể là WEBM hoặc không hỗ trợ ghi kèm nhạc. Để xuất MP4 có nhạc ổn định, dùng bản Python trên Windows.</p>
+</section>
+<section class="panel"><h2>02 / Màn hình dựng</h2><div class="preview"><canvas id="cv" width="540" height="960"></canvas></div><p class="hint">Ảnh và nhạc được xử lý trên thiết bị trong bản web; không có tài khoản hay API key nào cần nhập.</p></section>
+<section class="panel"><h2>03 / Dùng trên Windows</h2><p class="hint">Sau khi tải ZIP, xem <b>README.txt</b>. Bản Python hỗ trợ ảnh, nhạc nền, 5 mẫu, 4 kiểu chuyển cảnh và xuất MP4 dọc.</p></section>
+</main>
+<script>
+const $=id=>document.getElementById(id),cv=$('cv'),ctx=cv.getContext('2d');
+let imgs=[], raf=0, previewing=false, audioUrl=null;
+$('photos').onchange=async e=>{imgs=[];for(const f of e.target.files){try{let im=new Image();im.src=URL.createObjectURL(f);await im.decode();imgs.push(im)}catch{}}$('status').textContent=`Đã nạp ${imgs.length} ảnh.`;draw(0)};
+function palette(){return ({cyber:{a:'#43f6e8',b:'#365de5',top:'#07162d',bot:'#090414'},anime:{a:'#ffe66d',b:'#ff3d86',top:'#211044',bot:'#070b1d'},matrix:{a:'#75ff9b',b:'#00b47b',top:'#001b13',bot:'#020807'},pink:{a:'#ff67c8',b:'#a15cff',top:'#260b2a',bot:'#090718'},cinema:{a:'#9dc9ff',b:'#526dff',top:'#0b1932',bot:'#060916'}})[$('theme').value]}
+function wrap(text,x,y,max,lineH,font){ctx.font=font;let words=text.split(/\s+/),line='',yy=y;for(let w of words){let test=(line+' '+w).trim();if(ctx.measureText(test).width>max&&line){ctx.fillText(line,x,yy);line=w;yy+=lineH}else line=test}if(line)ctx.fillText(line,x,yy)}
+function draw(sec=0){
+ const W=cv.width,H=cv.height,p=palette(),dur=+$('duration').value,lines=$('copy').value.split('\n').filter(Boolean),n=Math.max(1,lines.length);
+ let scene=Math.floor(sec/(dur/n)),local=(sec%(dur/n))/(dur/n), idx=scene%n, tr=$('transition').value;
+ let grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,p.top);grad.addColorStop(1,p.bot);ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+ if(imgs.length){let ii=scene%imgs.length,im=imgs[ii],sc=Math.max(W/im.width,H/im.height)*(1+0.045*Math.sin(sec*.7)),iw=im.width*sc,ih=im.height*sc;ctx.save();ctx.globalAlpha=.62;ctx.filter='saturate(1.3) contrast(1.08)';ctx.drawImage(im,(W-iw)/2,(H-ih)/2,iw,ih);ctx.restore();ctx.fillStyle='#0205109c';ctx.fillRect(0,0,W,H)}
+ // cyber grid
+ ctx.save();ctx.globalAlpha=.16;ctx.strokeStyle=p.a;ctx.lineWidth=1;for(let x=0;x<W;x+=36){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=36){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+ for(let i=0;i<55;i++){let x=(i*97+sec*( $('motion').value==='fast'?70:$('motion').value==='slow'?18:38))%W,y=(i*151+sec*23)%H;ctx.fillStyle=p.a;ctx.globalAlpha=.15+(i%4)*.12;ctx.fillRect(x,y,2,2)}ctx.globalAlpha=1;
+ ctx.strokeStyle=p.a;ctx.lineWidth=2;ctx.shadowBlur=14;ctx.shadowColor=p.a;ctx.strokeRect(24,24,W-48,H-48);
+ ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowBlur=14;ctx.shadowColor=p.b;ctx.fillStyle='#fff';ctx.font='bold 21px system-ui';ctx.fillText($('subtitle').value.toUpperCase(),W/2,105);
+ let size=+$('size').value, pulse=1+.025*Math.sin(sec*4);ctx.save();ctx.translate(W/2,H*.37);ctx.scale(pulse,pulse);ctx.fillStyle=p.a;ctx.font=`900 ${size}px system-ui`;wrap($('title').value.toUpperCase(),0,0,W-70,size+15,`900 ${size}px system-ui`);ctx.restore();
+ let alpha=1;if(tr==='fade')alpha=Math.min(1,local*5,(1-local)*5);ctx.globalAlpha=Math.max(.18,alpha);
+ let yy=H*.64;if(tr==='slide'){ctx.save();ctx.translate((1-local)*W*.25,0)}if(tr==='zoom'){ctx.save();let z=.85+.15*Math.min(1,local*4);ctx.translate(W/2,yy);ctx.scale(z,z);ctx.translate(-W/2,-yy)}
+ ctx.fillStyle='#fff';ctx.shadowBlur=20;ctx.shadowColor=p.b;wrap(lines[idx]||'ADD STUDIO',W/2,yy,W-80,38,'bold 27px system-ui');
+ if(tr==='slide'||tr==='zoom')ctx.restore();
+ if(tr==='glitch'&&local<.22){ctx.globalAlpha=.5;ctx.fillStyle=p.b;ctx.fillRect(40,yy-30,W-80,3);ctx.fillStyle=p.a;ctx.fillRect(65,yy+15,W-130,2)}
+ ctx.globalAlpha=1;ctx.shadowBlur=0;ctx.fillStyle='#d5e2ff';ctx.font='16px system-ui';ctx.fillText('ADD STUDIO  //  VIDEO LAB PRO',W/2,H-65);
+ ctx.fillStyle='#ffffff33';ctx.fillRect(45,H-45,W-90,4);ctx.fillStyle=p.a;ctx.fillRect(45,H-45,(W-90)*Math.min(1,sec/dur),4);
+}
+function loop(){if(!previewing)return;let sec=(performance.now()-window.previewStart)/1000;draw(sec);if(sec>=+$('duration').value){previewing=false;return}raf=requestAnimationFrame(loop)}
+$('previewBtn').onclick=()=>{cancelAnimationFrame(raf);previewing=true;window.previewStart=performance.now();loop();$('status').textContent='Đang xem trước chuyển cảnh và chữ động.'};
+$('recordBtn').onclick=async()=>{
+ if(!window.MediaRecorder||!cv.captureStream){$('status').textContent='Trình duyệt này không hỗ trợ ghi video. Hãy dùng bản Python trên Windows.';return}
+ let mime=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(x=>MediaRecorder.isTypeSupported(x));
+ if(!mime){$('status').textContent='Không có định dạng ghi video tương thích.';return}
+ cancelAnimationFrame(raf);previewing=false;
+ const dur=+$('duration').value,stream=cv.captureStream(30),chunks=[];
+ let audioEl=null,audioCtx=null,srcNode=null,gain=null;
+ const musicFile=$('music').files[0];
+ if(musicFile){try{audioEl=new Audio();audioEl.src=URL.createObjectURL(musicFile);audioEl.loop=true;audioEl.volume=+$('volume').value/100;audioEl.crossOrigin='anonymous';await audioEl.play();if(audioEl.captureStream){let as=audioEl.captureStream();as.getAudioTracks().forEach(t=>stream.addTrack(t))}else{audioCtx=new(window.AudioContext||window.webkitAudioContext)();srcNode=audioCtx.createMediaElementSource(audioEl);gain=audioCtx.createGain();gain.gain.value=+$('volume').value/100;srcNode.connect(gain);gain.connect(audioCtx.destination);gain.connect(audioCtx.createMediaStreamDestination());let dest=audioCtx.createMediaStreamDestination();srcNode.disconnect();srcNode.connect(gain);gain.connect(audioCtx.destination);gain.connect(dest);dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t))}}catch(e){$('status').textContent='Không thể thêm nhạc trong trình duyệt này; tiếp tục thử ghi video không nhạc.'}}
+ const rec=new MediaRecorder(stream,{mimeType:mime});rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};rec.onstop=()=>{if(audioEl)audioEl.pause();let blob=new Blob(chunks,{type:mime}),url=URL.createObjectURL(blob),a=$('download');a.href=url;a.download='ADD_STUDIO_VIDEO.webm';a.textContent='⬇ TẢI VIDEO WEBM';a.style.display='block';$('status').textContent='Hoàn tất. Nếu không có tiếng trên Safari, xuất lại bằng bản Python để ghép nhạc.'};
+ rec.start();$('status').textContent='Đang dựng video — giữ trang này mở.';let t0=performance.now();
+ function frame(now){let s=(now-t0)/1000;draw(s);if(s<dur)requestAnimationFrame(frame);else rec.stop()}requestAnimationFrame(frame);
+};
+draw(0);
+</script></body></html>
